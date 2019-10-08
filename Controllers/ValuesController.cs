@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Freelance_Api.DatabaseAccess;
+using Freelance_Api.Models;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace Freelance_Api.Controllers
 {
@@ -10,11 +14,17 @@ namespace Freelance_Api.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private IDao _dao;
+        public ValuesController(IDao dao)
+        {
+            _dao = dao;
+        }
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public async Task<ActionResult<IEnumerable<string>>> Get()
         {
-            return new string[] {"value1", "value2"};
+         
+            return new ObjectResult(await _dao.Students.Find(_ => true).ToListAsync());
         }
 
         // GET api/values/5
