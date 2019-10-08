@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p=".gitignore" t="Include" />
+      <e p="APIs" t="Include">
+        <e p="Login" t="Include">
+          <e p="CampusNetController.cs" t="Include" />
+        </e>
+      </e>
+      <e p="appsettings.json" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Controllers" t="Include">
+        <e p="EmployerController.cs" t="Include" />
+        <e p="JobController.cs" t="Include" />
+        <e p="StudentController.cs" t="Include" />
+      </e>
+      <e p="DatabaseAccess" t="Include">
+        <e p="DAO.cs" t="Include" />
+        <e p="IDao.cs" t="Include" />
+      </e>
+      <e p="Freelance-Api.csproj" t="IncludeRecursive" />
+      <e p="Freelance-Api.sln" t="IncludeFlat" />
+      <e p="Models" t="Include">
+        <e p="Settings.cs" t="Include" />
+        <e p="Student.cs" t="Include" />
+      </e>
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp2.2" t="Include">
+            <e p="Freelance-Api.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Program.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="launchSettings.json" t="Include" />
+      </e>
+      <e p="Startup.cs" t="Include" />
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_Freelance-Api.-1817391199.00" t="ExcludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/scratches" t="IncludeRecursive" />
+  </component>
+</project>
