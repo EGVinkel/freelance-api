@@ -12,10 +12,10 @@ namespace Freelance_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class StudentController : ControllerBase
     {
         private IDao _dao;
-        public ValuesController(IDao dao)
+        public StudentController(IDao dao)
         {
             _dao = dao;
         }
