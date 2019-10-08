@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Freelance_Api.APIs.Login
 {
-    [Route("api/[controller]")]
+    [Route("api/login/[controller]")]
     [ApiController]
     public class CampusNetController : ControllerBase
     {
