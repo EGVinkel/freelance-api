@@ -2,3 +2,4 @@ bin/
 obj/
 /packages/
 appsettings.Development.json
+/.idea.Freelance-Api/
