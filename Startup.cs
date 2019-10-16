@@ -1,12 +1,12 @@
-﻿using Freelance_Api.DatabaseAccess;
-using Freelance_Api.Models;
+﻿using Freelance_Api.Models;
+using Freelance_Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
-using MongoDB.Driver;
 
 namespace Freelance_Api
 {
@@ -23,19 +23,19 @@ namespace Freelance_Api
         public void ConfigureServices(IServiceCollection services)
 
         {
-            services.Configure<Settings>(options =>
-            {
-                options.ConnectionString = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.Database = Configuration.GetSection("MongoConnection:Database").Value;
-            });
+            services.Configure<DatabaseSettings>(
+                Configuration.GetSection(nameof(DatabaseSettings)));
+            
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "Freelance API", Version = "v1"});
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddSingleton<IMongoClient, MongoClient>(_ =>
-                new MongoClient(Configuration.GetSection("MongoConnection:ConnectionString").Value));
-            services.AddTransient<IDao, Dao>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2).AddControllersAsServices();
+            services.AddSingleton<IDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<DatabaseSettings>>().Value);
+            services.AddSingleton<JobService>();
+            services.AddSingleton<StudentService>();
+            services.AddSingleton<EmployerService>();
          
         }
 

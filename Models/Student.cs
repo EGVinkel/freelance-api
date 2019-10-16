@@ -7,7 +7,8 @@ namespace Freelance_Api.Models
     public class Student
     {
         [BsonId] 
-        public ObjectId Id {get; set; }
+        [BsonRepresentation(BsonType.ObjectId)]
+        public string Id { get; set; }
         public string Name { get; set; }
         public string Study { get; set; }
         public string Uni { get; set; }

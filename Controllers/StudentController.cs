@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Freelance_Api.DatabaseAccess;
+﻿using System.Collections.Generic;
 using Freelance_Api.Models;
+using Freelance_Api.Services;
 using Microsoft.AspNetCore.Mvc;
-using MongoDB.Driver;
 
 namespace Freelance_Api.Controllers
 {
@@ -14,42 +9,64 @@ namespace Freelance_Api.Controllers
     [ApiController]
     public class StudentController : ControllerBase
     {
-        private IDao _dao;
-        public StudentController(IDao dao)
+        private readonly StudentService _studentService;
+        public StudentController(StudentService studentService)
         {
-            _dao = dao;
+            _studentService = studentService;
         }
-        // GET api/values
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<string>>> Get()
+        public ActionResult<List<Student>> Get() =>
+            _studentService.Get();
+
+        [HttpGet("{id:length(24)}", Name = "GetBook")]
+        public ActionResult<Student> Get(string id)
         {
-         
-            return new ObjectResult(await _dao.Students.Find(_ => true).ToListAsync());
+            var student = _studentService.Get(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            return student;
         }
 
-        // GET api/values/5
-        [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Student> Create(Student student)
         {
+            _studentService.Create(student);
+
+            return  student;
         }
 
-        // PUT api/values/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut("{id:length(24)}")]
+        public IActionResult Update(string id, Student studentin)
         {
+            var student = _studentService.Get(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            _studentService.Update(id, studentin);
+
+            return NoContent();
         }
 
-        // DELETE api/values/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete("{id:length(24)}")]
+        public IActionResult Delete(string id)
         {
+            var student = _studentService.Get(id);
+
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            _studentService.Remove(student.Id);
+
+            return NoContent();
         }
     }
 }
