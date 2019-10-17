@@ -68,6 +68,8 @@ namespace Freelance_Api.Models
 
             _jobService.Remove(job.id);
 
+
+
             return NoContent();
         }
     }
