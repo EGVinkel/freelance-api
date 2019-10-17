@@ -8,13 +8,13 @@ namespace Freelance_Api.Models
     {
         [BsonId] 
         [BsonRepresentation(BsonType.ObjectId)]
-        public string Id { get; set; }
-        public string Name { get; set; }
-        public string Study { get; set; }
-        public string Uni { get; set; }
-        public int Semester { get; set; }
-        public string Ranking { get; set; }
-        DateTime CreatedOn { get; set; }
-        DateTime ModifiedOn { get; set; }
+        public string id { get; set; }
+        public string name { get; set; }
+        public string study { get; set; }
+        public string uni { get; set; }
+        public int semester { get; set; }
+        public string ranking { get; set; }
+        DateTime createdOn { get; set; }
+        DateTime modifiedOn { get; set; }
     }
 }
