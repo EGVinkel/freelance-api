@@ -3,22 +3,22 @@ using Freelance_Api.Models;
 using Freelance_Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Freelance_Api.Models
+namespace Freelance_Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class JobController
+    public class JobController: ControllerBase
     {
         private readonly JobService _jobService;
 
-        public jobController(JobService jobService)
+        public JobController(JobService jobService)
         {
-            _jobService = jobService
+            _jobService = jobService;
         }
 
         [HttpGet]
         public ActionResult<List<Job>> Get() =>
-            _jobService.get();
+            _jobService.Get();
 
         [HttpGet("{id:length(24)}")]
         public ActionResult<Job> Get(string id)
@@ -61,12 +61,12 @@ namespace Freelance_Api.Models
         {
             var job = _jobService.Get(id);
 
-            if (job == int)
+            if (job == null)
             {
                 return NotFound();
             }
 
-            _jobService.Remove(job.id);
+            _jobService.Remove(job.Id);
 
 
 
