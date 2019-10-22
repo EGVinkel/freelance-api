@@ -15,6 +15,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Folder Include="Controllers\APIs\CVR" />
       <Folder Include="DataAccess" />
     </ItemGroup>
 
