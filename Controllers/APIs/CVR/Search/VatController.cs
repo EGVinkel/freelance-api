@@ -1,10 +1,15 @@
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Net;
 using System.Threading.Tasks;
 using Freelance_Api.Models.APIs.Login.CampusNet;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using Freelance_Api.Extensions;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Freelance_Api.Controllers.APIs
 {
@@ -12,18 +17,51 @@ namespace Freelance_Api.Controllers.APIs
     [ApiController]
     public class VatController : ControllerBase
     {
-        [HttpPost("{id:length(8)}")]
+        [HttpPost("{vatFromEndPoint}")]
         [AllowAnonymous]
         public async Task<IActionResult> PostAsync(string vatFromEndPoint)
         {
-            int ResponseStatusCode = 200;
+            int responseStatusCode;
+            var responseFromHttpRequest = await CVRVatHTTPRequestAsync(vatFromEndPoint);
+            var responseContentFromHttpRequest = await responseFromHttpRequest.Content.ReadAsStringAsync();
+            
+            Console.WriteLine(responseFromHttpRequest);
+            Console.WriteLine(responseContentFromHttpRequest);
 
-            if (ResponseStatusCode == 401)
+            responseStatusCode = (int) responseFromHttpRequest.StatusCode;
+            
+            if (responseStatusCode == 401)
             {
                 return BadRequest(ModelState);
             }
 
-            return Ok(ResponseStatusCode);
+            return Ok(responseContentFromHttpRequest);
+        }
+        
+        protected async Task<HttpResponseMessage> CVRVatHTTPRequestAsync(string vatFromQuery)
+        {
+            string baseApiURL = "https://cvrapi.dk/api";
+
+            HttpClient client = new HttpClient();
+            HttpContent content = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("vat", vatFromQuery),
+                new KeyValuePair<string, string>("country", "DK"),
+            });
+
+            client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent",
+                "[DTU@Gruppe0] [Freelance-portal] - [Ali M] [aamoussa97@gmail.com]");
+            
+            var parameters = new Dictionary<string, string>();
+            parameters.Add("vat", vatFromQuery);
+            parameters.Add("country", "DK");
+            
+            //var parameters = new Dictionary<string, string> { { "vat", vatFromQuery }, { "country", "DK" } };
+            var encodedContent = new FormUrlEncodedContent (parameters);
+            
+            var response = await client.PostAsync(baseApiURL, content); //client.PostAsync(baseApiURL, content); // await client.PostAsync(baseApiURLWithURLEncodedParametrs); //
+
+            return response;
         }
     }
 }
