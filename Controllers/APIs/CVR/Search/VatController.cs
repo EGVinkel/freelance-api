@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using Freelance_Api.Extensions;
 using Microsoft.AspNetCore.WebUtilities;
+using Newtonsoft.Json;
 
 namespace Freelance_Api.Controllers.APIs
 {
@@ -33,7 +34,9 @@ namespace Freelance_Api.Controllers.APIs
                 return BadRequest(ModelState);
             }
 
-            return Ok(responseContentFromHttpRequest);
+            var responseContentFromHttpRequestToJSON = JsonConvert.DeserializeObject(responseContentFromHttpRequest);
+
+            return Ok(responseContentFromHttpRequestToJSON);
         }
         
         protected async Task<HttpResponseMessage> CVRVatHTTPRequestAsync(string vatFromQuery)
