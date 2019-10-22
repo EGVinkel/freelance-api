@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using Freelance_Api.Extensions;
 using Microsoft.AspNetCore.WebUtilities;
 
 namespace Freelance_Api.Controllers.APIs
@@ -43,8 +44,12 @@ namespace Freelance_Api.Controllers.APIs
             
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent",
                 "[DTU@Gruppe0] [Freelance-portal] - [Ali M] [aamoussa97@gmail.com]");
+            
+            var parameters = new Dictionary<string, string>();
+            parameters.Add("vat", vatFromQuery);
+            parameters.Add("country", "DK");
 
-            string baseApiURLWithParameters = String.Format(baseApiURL + "?vat={0}&country=dk", vatFromQuery);
+            string baseApiURLWithParameters = baseApiURL.AttachParameters(parameters);
    
             var response = await client.GetAsync(baseApiURLWithParameters);
             
