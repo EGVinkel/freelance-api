@@ -52,12 +52,10 @@ namespace Freelance_Api.Controllers.APIs
             var parameters = new Dictionary<string, string>();
             parameters.Add("vat", vatFromQuery);
             parameters.Add("country", "DK");
-            
-            //var parameters = new Dictionary<string, string> { { "vat", vatFromQuery }, { "country", "DK" } };
             var encodedContent = new FormUrlEncodedContent (parameters);
             
-            var response = await client.PostAsync(baseApiURL, content); //client.PostAsync(baseApiURL, content); // await client.PostAsync(baseApiURLWithURLEncodedParametrs); //
-
+            var response = await client.PostAsync(baseApiURL, content);
+            
             return response;
         }
     }
