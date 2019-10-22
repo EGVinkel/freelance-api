@@ -40,21 +40,13 @@ namespace Freelance_Api.Controllers.APIs
             string baseApiURL = "https://cvrapi.dk/api";
 
             HttpClient client = new HttpClient();
-            HttpContent content = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("vat", vatFromQuery),
-                new KeyValuePair<string, string>("country", "DK"),
-            });
-
+            
             client.DefaultRequestHeaders.TryAddWithoutValidation("User-Agent",
                 "[DTU@Gruppe0] [Freelance-portal] - [Ali M] [aamoussa97@gmail.com]");
-            
-            var parameters = new Dictionary<string, string>();
-            parameters.Add("vat", vatFromQuery);
-            parameters.Add("country", "DK");
-            var encodedContent = new FormUrlEncodedContent (parameters);
-            
-            var response = await client.PostAsync(baseApiURL, content);
+
+            string baseApiURLWithParameters = String.Format(baseApiURL + "?vat={0}&country=dk", vatFromQuery);
+   
+            var response = await client.GetAsync(baseApiURLWithParameters);
             
             return response;
         }
