@@ -24,9 +24,6 @@ namespace Freelance_Api.Controllers.APIs
             var responseFromHttpRequest = await CVRVatHTTPRequestAsync(vatFromEndPoint);
             var responseContentFromHttpRequest = await responseFromHttpRequest.Content.ReadAsStringAsync();
             
-            Console.WriteLine(responseFromHttpRequest);
-            Console.WriteLine(responseContentFromHttpRequest);
-
             responseStatusCode = (int) responseFromHttpRequest.StatusCode;
             
             if (responseStatusCode == 401)

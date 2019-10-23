@@ -23,10 +23,7 @@ namespace Freelance_Api.Controllers.APIs
             int responseStatusCode;
             var responseFromHttpRequest = await CVRNameHTTPRequestAsync(nameFromEndPoint);
             var responseContentFromHttpRequest = await responseFromHttpRequest.Content.ReadAsStringAsync();
-            
-            Console.WriteLine(responseFromHttpRequest);
-            Console.WriteLine(responseContentFromHttpRequest);
-
+     
             responseStatusCode = (int) responseFromHttpRequest.StatusCode;
             
             if (responseStatusCode == 401)
